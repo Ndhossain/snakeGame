@@ -17,6 +17,19 @@ body {
     align-items: center;
 }
 
+#score {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 1em;
+    right: 1em;
+    height: 2em;
+    width: 4em;
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: 0px 0px 3px 3px #fff;
+}
+
 #board {
     background: rgba(255, 255, 255, 0.8);
     width: 90vmin;
@@ -29,16 +42,17 @@ body {
 }
 
 .snakeHead {
-    background-color: black;
+    background-color: purple;
     width: 100%;
+    border-radius: 50%;
 }
 
 .snakeBody {
-    background-color: purple;
+    background-color: #DB6B97;
     width: 100%;
 }
 
 .snakeFood {
-    background-color: yellow;
+    background: linear-gradient(#9B0000, #FF7272);
     width: 100%;
 }

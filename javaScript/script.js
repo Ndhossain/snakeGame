@@ -14,6 +14,8 @@ food = { x: 6, y: 7 };
 
 
 
+
+
 // game function
 
 function main(currentTime) {
@@ -25,13 +27,22 @@ function main(currentTime) {
     gameEngine();
 }
 
-function isCollide(sarr) {
-    return false;
+function isCollide(snake) {
+    // if you bite your self
+    for (let i = 1; i < snakeArr.length; i++) {
+        if (snake[i].x === snake[0].x && snake[i].y === snake[0].y) {
+            return true;
+        }
+    }
+    // if you bite in to wall
+    if (snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0) {
+        return true;
+    }
 }
 
 function gameEngine() {
     // part 1: Updating the snake & food
-    if (isCollide(snakeArr)){
+    if (isCollide(snakeArr)) {
         gameOverSound.play();
         musicSound.pause();
         inputDir = { x: 0, y: 0 };
@@ -39,21 +50,33 @@ function gameEngine() {
         snakeArr = [{ x: 13, y: 15 }];
         musicSound.play();
         score = 0;
+        document.getElementById('point').innerHTML = score;
     }
 
     // if snake eaten incriment score and regenerate the food
-    if (snakeArr[0].y === food.y && snakeArr[0].x === food.x){
-        snakeArr.unshift({x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y})
+    if (snakeArr[0].y === food.y && snakeArr[0].x === food.x) {
+        snakeArr.unshift({ x: snakeArr[0].x + inputDir.x, y: snakeArr[0].y + inputDir.y })
         let a = 2;
         let b = 16;
-        food = {x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()),}
+        food = { x: Math.round(a + (b - a) * Math.random()), y: Math.round(a + (b - a) * Math.random()), }
         foodSound.play();
+        score += 1;
+        document.getElementById('point').innerHTML = score;
+        
+        // difficulty setting
+
+        // function difficulty(scoring){
+        // score = scoring
+        //     if (scoring == 3) {
+        //         speed += 5
+        //     }
+        // }
     }
 
     // moving the snake
     for (let i = snakeArr.length - 2; i >= 0; i--) {
         // const element = snakeArr[i];
-        snakeArr[i + 1] = {...snakeArr[i]};
+        snakeArr[i + 1] = { ...snakeArr[i] };
     }
 
     snakeArr[0].x += inputDir.x;
